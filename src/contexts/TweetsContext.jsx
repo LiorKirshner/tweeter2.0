@@ -4,7 +4,10 @@ import { loadTweetsFromStorage, saveTweetsToStorage } from "../lib/storage";
 function tweetsReducer(state, action) {
   switch (action.type) {
     case "LOAD_TWEETS":
-      return action.payload;
+      // Sort tweets by timestamp in descending order (newest first)
+      return action.payload.sort(
+        (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+      );
     case "ADD_TWEET":
       const newTweet = {
         id: Date.now().toString(),
