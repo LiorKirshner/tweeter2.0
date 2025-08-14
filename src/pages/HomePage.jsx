@@ -6,8 +6,8 @@ function Homepage() {
   const { tweets } = useTweets();
 
   return (
-    <div className="min-h-screen bg-gray-900 flex justify-center py-8">
-      <div className="w-full max-w-lg bg-gray-800 rounded-lg shadow-lg">
+    <div className="min-h-screen bg-gray-100 flex justify-center py-8">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl border border-gray-200">
         {/* Create Tweet Section */}
         <section>
           <CreateTweet />
