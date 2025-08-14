@@ -1,21 +1,23 @@
+import Tweet from "./Tweet";
 import { useTweets } from "../contexts/TweetsContext";
 
 function TweetsList() {
   const { tweets } = useTweets();
 
+  if (tweets.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-400 text-sm">
+          No tweets yet. Write your first tweet above!
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h3>Tweets List</h3>
+    <div className="space-y-2">
       {tweets.map((tweet) => (
-        <div
-          key={tweet.id}
-          style={{ border: "1px solid #ccc", margin: "10px", padding: "10px" }}
-        >
-          <p>{tweet.text}</p>
-          <small>
-            By: {tweet.author} | {new Date(tweet.timestamp).toLocaleString()}
-          </small>
-        </div>
+        <Tweet key={tweet.id} tweet={tweet} />
       ))}
     </div>
   );
