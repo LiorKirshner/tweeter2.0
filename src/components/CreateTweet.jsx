@@ -6,7 +6,7 @@ function CreateTweet() {
   const { addTweet } = useTweets();
 
   const handleTweet = () => {
-    if (tweetText.trim()) {
+    if (tweetText.trim() && tweetText.length <= 140) {
       addTweet(tweetText);
       setTweetText("");
     }
@@ -22,7 +22,10 @@ function CreateTweet() {
         rows={3}
         style={{ width: "100%", resize: "vertical" }}
       />
-      <button onClick={handleTweet} disabled={!tweetText.trim()}>
+      <button
+        onClick={handleTweet}
+        disabled={!tweetText.trim() || tweetText.length > 140}
+      >
         Tweet
       </button>
     </div>
