@@ -5,7 +5,9 @@ import { TweetsProvider } from "./contexts/TweetsContext";
 function App() {
   return (
     <TweetsProvider>
-      <h1>Tweeter 2.0 app</h1>
+      <div className="bg-red-500 text-white p-4 text-center">
+        <h1 className="text-2xl font-bold">Tweeter 2.0 app - Tailwind Test!</h1>
+      </div>
       <Homepage />
     </TweetsProvider>
   );
