@@ -6,9 +6,20 @@ function CreateTweet() {
   const { addTweet, isCreating } = useTweets();
 
   const handleTweet = () => {
+    // Prevent multiple submissions
+    if (isCreating) return;
+
     if (tweetText.trim() && tweetText.length <= 140) {
       addTweet(tweetText);
       setTweetText("");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    // Handle Ctrl+Enter or Cmd+Enter to submit
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      handleTweet();
     }
   };
 
@@ -23,16 +34,20 @@ function CreateTweet() {
           <textarea
             value={tweetText}
             onChange={(e) => setTweetText(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="What you have in mind..."
             rows={4}
-            className="w-full bg-gray-100 text-gray-900 text-lg placeholder-gray-400 border border-gray-300 rounded-lg p-4 resize-none focus:outline-none focus:border-blue-400 focus:bg-white"
+            disabled={isCreating}
+            className="w-full bg-gray-100 text-gray-900 text-lg placeholder-gray-400 border border-gray-300 rounded-lg p-4 resize-none focus:outline-none focus:border-blue-400 focus:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
           />
 
           {/* Bottom section */}
           <div className="flex justify-end items-center mt-4">
             <button
               onClick={handleTweet}
-              disabled={!tweetText.trim() || tweetText.length > 140 || isCreating}
+              disabled={
+                !tweetText.trim() || tweetText.length > 140 || isCreating
+              }
               className="px-8 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
             >
               {isCreating && (

@@ -46,6 +46,9 @@ export function TweetsProvider({ children }) {
   }, []);
 
   const addTweetToServer = async (content) => {
+    // Prevent duplicate requests
+    if (isCreating) return;
+
     try {
       setIsCreating(true);
       const newTweet = {
