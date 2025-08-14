@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useTweets } from "../contexts/TweetsContext";
 
 function CreateTweet() {
   const [tweetText, setTweetText] = useState("");
+  const { addTweet } = useTweets();
 
   const handleTweet = () => {
     if (tweetText.trim()) {
-      console.log("New tweet:", tweetText);
-      setTweetText(""); // Clear the input after tweeting
+      addTweet(tweetText);
+      setTweetText("");
     }
   };
 

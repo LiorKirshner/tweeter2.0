@@ -1,9 +1,11 @@
-import { useReducer, useState } from "react";
 import "./HomePage.css";
 import CreateTweet from "../components/CreateTweet";
 import TweetsList from "../components/TweetsList";
+import { useTweets } from "../contexts/TweetsContext";
 
 function Homepage() {
+  const { tweets } = useTweets();
+
   return (
     <>
       <h2>Home Page</h2>
@@ -11,7 +13,7 @@ function Homepage() {
         <CreateTweet />
       </div>
       <div className="tweets-section">
-        <TweetsList />
+        {tweets.length > 0 && <TweetsList />}
       </div>
     </>
   );
