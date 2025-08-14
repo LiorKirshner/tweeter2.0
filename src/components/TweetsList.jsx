@@ -15,7 +15,7 @@ function TweetsList() {
   }
 
   return (
-  <div className="space-y-3">
+    <div className="space-y-3">
       {tweets.map((tweet) => (
         <Tweet key={tweet.id} tweet={tweet} />
       ))}

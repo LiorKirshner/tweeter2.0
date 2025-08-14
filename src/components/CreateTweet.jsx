@@ -16,7 +16,7 @@ function CreateTweet() {
   const isOverLimit = charactersLeft < 0;
 
   return (
-  <div className="p-6 border-b border-gray-200 bg-white rounded-t-2xl">
+    <div className="p-6 border-b border-gray-200 bg-white rounded-t-2xl">
       <div className="flex space-x-3">
         {/* Tweet compose area */}
         <div className="flex-1">

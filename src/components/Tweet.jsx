@@ -11,7 +11,7 @@ function Tweet({ tweet }) {
   };
 
   return (
-  <article className="border-b border-gray-100 p-4 bg-gray-50 mb-3 mx-2 rounded-xl shadow-sm">
+    <article className="border-b border-gray-100 p-4 bg-gray-50 mb-3 mx-2 rounded-xl shadow-sm">
       <div className="flex space-x-3">
         {/* Tweet content */}
         <div className="flex-1 min-w-0">
@@ -26,7 +26,9 @@ function Tweet({ tweet }) {
           </div>
 
           {/* Tweet text */}
-          <p className="text-gray-900 text-base leading-relaxed">{tweet.text}</p>
+          <p className="text-gray-900 text-base leading-relaxed">
+            {tweet.text}
+          </p>
         </div>
       </div>
     </article>
