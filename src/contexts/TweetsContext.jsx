@@ -1,7 +1,10 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
+import { loadTweetsFromStorage, saveTweetsToStorage } from "../lib/storage";
 
 function tweetsReducer(state, action) {
   switch (action.type) {
+    case "LOAD_TWEETS":
+      return action.payload;
     case "ADD_TWEET":
       const newTweet = {
         id: Date.now().toString(),
@@ -9,7 +12,9 @@ function tweetsReducer(state, action) {
         author: action.payload.author || "Anonymous",
         timestamp: new Date().toISOString(),
       };
-      return [newTweet, ...state];
+      const newState = [newTweet, ...state];
+      saveTweetsToStorage(newState);
+      return newState;
 
     default:
       return state;
@@ -20,6 +25,14 @@ const TweetsContext = createContext();
 
 export function TweetsProvider({ children }) {
   const [tweets, dispatch] = useReducer(tweetsReducer, []);
+
+  // Load tweets from localStorage on component mount
+  useEffect(() => {
+    const savedTweets = loadTweetsFromStorage();
+    if (savedTweets.length > 0) {
+      dispatch({ type: "LOAD_TWEETS", payload: savedTweets });
+    }
+  }, []);
 
   const value = {
     tweets,
