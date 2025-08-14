@@ -1,6 +1,9 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import { loadTweetsFromStorage, saveTweetsToStorage } from "../lib/storage";
 
+// Hard-coded username for now
+const CURRENT_USER = "LiorKirshner";
+
 function tweetsReducer(state, action) {
   switch (action.type) {
     case "LOAD_TWEETS":
@@ -12,7 +15,7 @@ function tweetsReducer(state, action) {
       const newTweet = {
         id: Date.now().toString(),
         text: action.payload.text,
-        author: action.payload.author || "Anonymous",
+        author: CURRENT_USER,
         timestamp: new Date().toISOString(),
       };
       const newState = [newTweet, ...state];
@@ -39,10 +42,10 @@ export function TweetsProvider({ children }) {
 
   const value = {
     tweets,
-    addTweet: (text, author) =>
+    addTweet: (text) =>
       dispatch({
         type: "ADD_TWEET",
-        payload: { text, author },
+        payload: { text },
       }),
   };
 
