@@ -3,7 +3,7 @@ import { useTweets } from "../contexts/TweetsContext";
 
 function CreateTweet() {
   const [tweetText, setTweetText] = useState("");
-  const { addTweet } = useTweets();
+  const { addTweet, isCreating } = useTweets();
 
   const handleTweet = () => {
     if (tweetText.trim() && tweetText.length <= 140) {
@@ -32,10 +32,13 @@ function CreateTweet() {
           <div className="flex justify-end items-center mt-4">
             <button
               onClick={handleTweet}
-              disabled={!tweetText.trim() || tweetText.length > 140}
-              className="px-8 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              disabled={!tweetText.trim() || tweetText.length > 140 || isCreating}
+              className="px-8 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center space-x-2"
             >
-              Tweet
+              {isCreating && (
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              )}
+              <span>{isCreating ? "Posting..." : "Tweet"}</span>
             </button>
           </div>
         </div>
