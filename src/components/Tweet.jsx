@@ -1,6 +1,6 @@
 function Tweet({ tweet }) {
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
     const now = new Date();
     const diffInMinutes = Math.floor((now - date) / (1000 * 60));
 
@@ -18,16 +18,16 @@ function Tweet({ tweet }) {
           {/* User info and time */}
           <div className="flex items-center space-x-2 mb-2">
             <span className="font-semibold text-gray-700 text-sm">
-              {tweet.author}
+              {tweet.userName}
             </span>
             <span className="text-gray-400 text-xs">
-              {formatDate(tweet.timestamp)}
+              {formatDate(tweet.date)}
             </span>
           </div>
 
           {/* Tweet text */}
           <p className="text-gray-900 text-base leading-relaxed">
-            {tweet.text}
+            {tweet.content}
           </p>
         </div>
       </div>
