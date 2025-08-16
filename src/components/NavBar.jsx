@@ -4,14 +4,15 @@ import { signOut } from "../lib/supabase";
 
 function NavBar() {
   const { user } = useAuth();
-  
+
   // Get username from user metadata or fallback to email prefix
-  const userName = user?.user_metadata?.username || user?.email?.split('@')[0] || 'User';
+  const userName =
+    user?.user_metadata?.username || user?.email?.split("@")[0] || "User";
   const userInitial = userName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     await signOut();
-    window.location.href = "/login";
+    window.location.href = "/tweeter2.0/login";
   };
 
   return (
