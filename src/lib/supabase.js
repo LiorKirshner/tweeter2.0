@@ -6,12 +6,6 @@ const supabaseKey =
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// פונקציות authentication פשוטות
-export const signInAnonymously = async () => {
-  const { data, error } = await supabase.auth.signInAnonymously();
-  return { data, error };
-};
-
 export const getCurrentUser = async () => {
   const {
     data: { user },
@@ -19,7 +13,6 @@ export const getCurrentUser = async () => {
   return user;
 };
 
-// התחברות עם email ו-password
 export const signInWithEmail = async (email, password) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -28,7 +21,14 @@ export const signInWithEmail = async (email, password) => {
   return { data, error };
 };
 
-// יציאה
+export const signUpWithEmail = async (email, password) => {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+  return { data, error };
+};
+
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut();
   return { error };
