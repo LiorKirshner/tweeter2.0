@@ -1,52 +1,69 @@
-import { useProfile } from "../contexts/ProfileContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { signOut } from "../lib/supabase";
 
 function Profile() {
-  const { currentUser, changeUser } = useProfile();
-  const [newUsername, setNewUsername] = useState("");
+  const { user } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newUsername.trim()) {
-      changeUser(newUsername.trim());
-      navigate("/"); // חזרה לדף הבית
-    }
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/login");
+  };
+
+  const handleGoHome = () => {
+    navigate("/");
   };
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6 text-center">Profile</h1>
+      <h1 className="text-2xl font-bold mb-6 text-center">User Profile</h1>
 
-      <div className="mb-4">
-        <p className="text-gray-600">Current user:</p>
-        <p className="text-xl font-semibold">
-          {currentUser || "No user selected"}
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+      <div className="space-y-4">
+        <div className="bg-gray-50 p-4 rounded-lg">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Change Username:
+            Email:
           </label>
-          <input
-            type="text"
-            value={newUsername}
-            onChange={(e) => setNewUsername(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter new username"
-          />
+          <p className="text-lg font-semibold text-gray-900">
+            {user?.email || "No email"}
+          </p>
         </div>
 
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Password:
+          </label>
+          <p className="text-lg font-mono text-gray-600">••••••••</p>
+          <p className="text-xs text-gray-500 mt-1">
+            Password is hidden for security
+          </p>
+        </div>
+
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            User ID:
+          </label>
+          <p className="text-sm font-mono text-gray-600 break-all">
+            {user?.id || "No ID"}
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-6 space-y-3">
         <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
+          onClick={handleGoHome}
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors font-medium"
         >
-          Update Username
+          Back to Home
         </button>
-      </form>
+
+        <button
+          onClick={handleLogout}
+          className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors font-medium"
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }

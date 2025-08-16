@@ -18,21 +18,21 @@ function App() {
             <div className="min-h-screen bg-gray-100 text-gray-900">
               <NavBar />
               <Routes>
-                <Route 
-                  path="/" 
+                <Route
+                  path="/"
                   element={
                     <ProtectedRoute>
                       <Homepage />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/profile" 
+                <Route
+                  path="/profile"
                   element={
                     <ProtectedRoute>
                       <Profile />
                     </ProtectedRoute>
-                  } 
+                  }
                 />
                 <Route path="/login" element={<Login />} />
               </Routes>
