@@ -12,7 +12,7 @@ function NavBar() {
 
   const handleLogout = async () => {
     await signOut();
-    window.location.href = "/tweeter2.0/login";
+    window.location.href = "/tweeter2.0";
   };
 
   return (
