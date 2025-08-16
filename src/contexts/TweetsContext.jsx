@@ -13,8 +13,19 @@ function tweetsReducer(state, action) {
     case "LOAD_TWEETS":
       // Sort tweets by date in descending order (newest first)
       return action.payload.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
     case "ADD_TWEET":
       return [action.payload, ...state];
+    
+    case "UPDATE_TWEETS":
+      // Update only if there are actually new tweets
+      const currentIds = state.map(tweet => tweet.id);
+      const newTweets = action.payload.filter(tweet => !currentIds.includes(tweet.id));
+      if (newTweets.length > 0) {
+        return [...newTweets, ...state].sort((a, b) => new Date(b.date) - new Date(a.date));
+      }
+      return state;
+    
     default:
       return state;
   }
@@ -44,6 +55,23 @@ export function TweetsProvider({ children }) {
     loadTweets();
   }, []);
 
+  // Polling interval to check for new tweets from other users
+  useEffect(() => {
+    const POLLING_INTERVAL = 10000; // 10 seconds
+    
+    const interval = setInterval(async () => {
+      try {
+        const serverTweets = await fetchTweets();
+        dispatch({ type: "UPDATE_TWEETS", payload: serverTweets });
+      } catch (error) {
+        console.error("Failed to poll tweets:", error);
+      }
+    }, POLLING_INTERVAL);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
+
   const addTweetToServer = async (content) => {
     // Prevent duplicate requests
     if (isCreating) return;
@@ -55,11 +83,13 @@ export function TweetsProvider({ children }) {
         userName: currentUser,
         date: new Date().toISOString(),
       };
+      
+      // Add to local list immediately (no need to wait for server)
       const createdTweet = await createTweet(newTweet);
-      // Supabase returns an array, get the first item
       const tweetToAdd = Array.isArray(createdTweet)
         ? createdTweet[0]
         : createdTweet;
+      
       dispatch({ type: "ADD_TWEET", payload: tweetToAdd });
     } catch (error) {
       console.error("Failed to create tweet:", error);
