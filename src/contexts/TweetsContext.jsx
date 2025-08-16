@@ -6,9 +6,7 @@ import {
   useState,
 } from "react";
 import { fetchTweets, createTweet } from "../lib/tweetsApi";
-
-// Hard-coded username for now
-export const CURRENT_USER = "Lior";
+import { useProfile } from "./ProfileContext";
 
 function tweetsReducer(state, action) {
   switch (action.type) {
@@ -28,6 +26,7 @@ export function TweetsProvider({ children }) {
   const [tweets, dispatch] = useReducer(tweetsReducer, []);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
+  const { currentUser } = useProfile();
 
   // Load tweets from server on component mount
   useEffect(() => {
@@ -53,7 +52,7 @@ export function TweetsProvider({ children }) {
       setIsCreating(true);
       const newTweet = {
         content: content,
-        userName: CURRENT_USER,
+        userName: currentUser,
         date: new Date().toISOString(),
       };
       const createdTweet = await createTweet(newTweet);

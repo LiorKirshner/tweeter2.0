@@ -1,6 +1,7 @@
-const API_URL = "https://uckmgdznnsnusvmyfvsb.supabase.co/rest/v1/Tweets";
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo";
+import { API_CONFIG } from "../config/constants";
+
+const API_URL = API_CONFIG.BASE_URL;
+const API_KEY = API_CONFIG.API_KEY;
 
 export async function fetchTweets() {
   const res = await fetch(API_URL, {
