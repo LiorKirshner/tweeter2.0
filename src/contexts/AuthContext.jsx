@@ -9,14 +9,9 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const getSession = async () => {
-      console.log("AuthContext: Getting session...");
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      console.log(
-        "AuthContext: Session found:",
-        session?.user?.email || "No user"
-      );
       setUser(session?.user ?? null);
       setLoading(false);
     };
@@ -26,17 +21,20 @@ export function AuthProvider({ children }) {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log(
-        "AuthContext: Auth state changed:",
-        event,
-        session?.user?.email || "No user"
-      );
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider value={{ user, loading }}>

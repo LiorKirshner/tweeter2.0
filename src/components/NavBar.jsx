@@ -18,7 +18,7 @@ function NavBar() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link
-            to="/"
+            to={user ? "/" : "/login"}
             className="text-xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
           >
             Tweeter 2.0
