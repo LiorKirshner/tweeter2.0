@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-import { useProfile } from "../contexts/ProfileContext";
 import { useAuth } from "../contexts/AuthContext";
 import { signOut } from "../lib/supabase";
 
 function NavBar() {
-  const { currentUser } = useProfile();
   const { user } = useAuth();
-  const userInitial = currentUser ? currentUser.charAt(0).toUpperCase() : "?";
+  
+  // Get username from user metadata or fallback to email prefix
+  const userName = user?.user_metadata?.username || user?.email?.split('@')[0] || 'User';
+  const userInitial = userName.charAt(0).toUpperCase();
 
   const handleLogout = async () => {
     await signOut();

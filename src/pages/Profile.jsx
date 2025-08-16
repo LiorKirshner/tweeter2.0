@@ -22,6 +22,15 @@ function Profile() {
       <div className="space-y-4">
         <div className="bg-gray-50 p-4 rounded-lg">
           <label className="block text-sm font-medium text-gray-700 mb-2">
+            Username:
+          </label>
+          <p className="text-lg font-semibold text-gray-900">
+            {user?.user_metadata?.username || user?.email?.split('@')[0] || "No username"}
+          </p>
+        </div>
+
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Email:
           </label>
           <p className="text-lg font-semibold text-gray-900">

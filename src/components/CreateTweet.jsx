@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useTweets } from "../contexts/TweetsContext";
+import { useAuth } from "../contexts/AuthContext";
 
 function CreateTweet() {
   const [tweetText, setTweetText] = useState("");
   const { addTweet, isCreating } = useTweets();
+  const { user } = useAuth();
 
   const handleTweet = () => {
     // Prevent multiple submissions

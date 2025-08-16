@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { fetchTweets, createTweet } from "../lib/tweetsApi";
-import { useProfile } from "./ProfileContext";
+import { useAuth } from "./AuthContext";
 
 function tweetsReducer(state, action) {
   switch (action.type) {
@@ -41,7 +41,7 @@ export function TweetsProvider({ children }) {
   const [tweets, dispatch] = useReducer(tweetsReducer, []);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreating, setIsCreating] = useState(false);
-  const { currentUser } = useProfile();
+  const { user } = useAuth();
 
   // Load tweets from server on component mount
   useEffect(() => {
@@ -82,9 +82,11 @@ export function TweetsProvider({ children }) {
 
     try {
       setIsCreating(true);
+      const userName = user?.user_metadata?.username || user?.email?.split('@')[0] || 'Anonymous';
+      
       const newTweet = {
         content: content,
-        userName: currentUser,
+        userName: userName,
         date: new Date().toISOString(),
       };
 
