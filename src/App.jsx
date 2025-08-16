@@ -4,6 +4,7 @@ import Homepage from "./pages/HomePage";
 import { TweetsProvider } from "./contexts/TweetsContext";
 import { ProfileProvider } from "./contexts/ProfileContext";
 import NavBar from "./components/NavBar";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
             <NavBar />
             <Routes>
               <Route path="/" element={<Homepage />} />
-              {/* Profile route will be added next */}
+
+              {<Route path="/profile" element={<Profile />} />}
             </Routes>
           </div>
         </Router>
