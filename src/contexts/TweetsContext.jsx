@@ -8,7 +8,7 @@ import {
 import { fetchTweets, createTweet } from "../lib/tweetsApi";
 
 // Hard-coded username for now
-const CURRENT_USER = "Lior";
+export const CURRENT_USER = "Lior";
 
 function tweetsReducer(state, action) {
   switch (action.type) {
