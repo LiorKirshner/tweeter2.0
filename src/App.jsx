@@ -7,13 +7,10 @@ import NavBar from "./components/NavBar";
 import Profile from "./pages/Profile";
 
 function App() {
-  // זיהוי אוטומטי של הסביבה
-  const basename = import.meta.env.MODE === "production" ? "/tweeter2.0" : "";
-
   return (
     <ProfileProvider>
       <TweetsProvider>
-        <Router basename={basename}>
+        <Router basename={"/tweeter2.0"}>
           <div className="min-h-screen bg-gray-100 text-gray-900">
             <NavBar />
             <Routes>
