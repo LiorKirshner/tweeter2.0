@@ -8,20 +8,31 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getSession = async () => {
+    const getSessionAndUser = async () => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
+      if (session?.user) {
+        // Always fetch latest user metadata
+        const { data: userData } = await supabase.auth.getUser();
+        setUser(userData.user ?? null);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     };
 
-    getSession();
+    getSessionAndUser();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        const { data: userData } = await supabase.auth.getUser();
+        setUser(userData.user ?? null);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
