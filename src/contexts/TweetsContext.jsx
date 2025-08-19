@@ -82,8 +82,11 @@ export function TweetsProvider({ children }) {
 
     try {
       setIsCreating(true);
-      const userName = user?.user_metadata?.username || user?.email?.split('@')[0] || 'Anonymous';
-      
+      const userName =
+        user?.user_metadata?.username ||
+        user?.email?.split("@")[0] ||
+        "Anonymous";
+
       const newTweet = {
         content: content,
         userName: userName,

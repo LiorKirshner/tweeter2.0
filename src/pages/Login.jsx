@@ -30,7 +30,11 @@ function Login() {
     try {
       if (isSignUp) {
         // Sign Up
-        const { data, error } = await signUpWithEmail(email, password, username);
+        const { data, error } = await signUpWithEmail(
+          email,
+          password,
+          username
+        );
 
         if (error) {
           setError(error.message);

@@ -28,9 +28,9 @@ export const signUpWithEmail = async (email, password, username) => {
     options: {
       data: {
         username: username,
-        display_name: username
-      }
-    }
+        display_name: username,
+      },
+    },
   });
   return { data, error };
 };

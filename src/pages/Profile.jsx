@@ -25,7 +25,9 @@ function Profile() {
             Username:
           </label>
           <p className="text-lg font-semibold text-gray-900">
-            {user?.user_metadata?.username || user?.email?.split('@')[0] || "No username"}
+            {user?.user_metadata?.username ||
+              user?.email?.split("@")[0] ||
+              "No username"}
           </p>
         </div>
 
